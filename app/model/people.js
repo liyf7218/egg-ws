@@ -4,7 +4,10 @@ module.exports = app => {
   const connect = app.mongooseDB.get('db_local');
 
   const PeopleSchema = new Schema({
-    name: String,
+    name: {
+      type: String,
+      required: true
+    },
     birthday: String,
     gender: String,
     phone: String,

@@ -69,6 +69,16 @@ module.exports = appInfo => {
     }
   };
 
+  config.onerror = {
+    all(err, ctx) {
+      // 在此处定义针对所有响应类型的错误处理方法
+      // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
+      ctx.logger.error(err);
+      ctx.body = err.message; //这里好像只能赋值成字符串,改成别的不行......
+      ctx.status = 500;
+    }
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

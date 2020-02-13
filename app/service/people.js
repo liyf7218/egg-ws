@@ -2,12 +2,26 @@
 const Service = require('egg').Service;
 
 class PeopleService extends Service {
-  async findAll() {
-    let { ctx } = this;
+  async list(params = {}) {
+    let {ctx} = this;
     return await ctx.model.People.find({});
   }
-  async list(params = {}) {
-    let { ctx } = this;
+  async get(id) {
+    let {ctx} = this;
+    let res = await ctx.model.People.findById(id);
+    return res;
+  }
+  async save(params = {}) {
+    let {ctx} = this;
+    let newInstance = new ctx.model.People(params);
+    return await newInstance.save();
+  }
+  async update(params = {}) {
+    let {ctx} = this;
+    return await ctx.model.People.find({});
+  }
+  async delete(id) {
+    let {ctx} = this;
     return await ctx.model.People.find({});
   }
 

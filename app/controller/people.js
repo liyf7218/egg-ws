@@ -1,28 +1,7 @@
 'use strict';
-
-const Controller = require('egg').Controller;
+const Controller = require('../core/base_controller');
 
 class PeopleController extends Controller {
-  async index() {
-    const {ctx, service} = this;
-    ctx.body = "Oops! You get people.";
-  }
-
-  // 获取动态路由
-  async operate() {
-    const {ctx} = this;
-    const {operate} = ctx.params;
-
-    if (operate && (operate in this)) {
-      console.log('==========> app/controller/people.js operate: ' + operate);
-      await this[operate]();
-      return;
-    }
-
-    // 不然就把 operate 直接打印出来
-    ctx.body = ctx.params;
-  }
-
   async list() {
     const {ctx, service} = this;
     ctx.body = await service.people.list();
@@ -30,7 +9,8 @@ class PeopleController extends Controller {
 
   async get() {
     const {ctx, service} = this;
-    ctx.body = await service.people.get(ctx.request.body.id);
+    let docs = await service.people.get(ctx.request.body.id);
+    this.setBody(docs);
   }
 
   async save() {
@@ -40,12 +20,16 @@ class PeopleController extends Controller {
 
   async update() {
     const {ctx, service} = this;
-    ctx.body = await service.people.update();
+    let  {id, ...payload} = ctx.request.body;
+    let docs = await service.people.update(id, payload);
+    this.setBody(docs);
   }
 
   async delete() {
     const {ctx, service} = this;
-    ctx.body = await service.people.delete();
+    let {id} = ctx.request.body;
+    let docs = await service.people.delete(id);
+    this.setBody(docs);
   }
 }
 

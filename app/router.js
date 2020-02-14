@@ -10,12 +10,12 @@ module.exports = app => {
   router.get('/', controller.home.index);
   router.post('/', controller.home.index);
 
+  // test
+  router.post('/test/:operate', controller.test.operate);
+
   // people
-  router.post('/people', controller.people.index);
   router.post('/people/:operate', controller.people.operate);
 
-  // test
-  router.post('/test', controller.test.index);
-  router.post('/test/:operate', controller.test.operate);
+  //
 
 };

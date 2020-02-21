@@ -5,6 +5,7 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+  const apiRouter = app.router.namespace('/api/v1');
 
   // home
   router.get('/', controller.home.index);
@@ -14,7 +15,7 @@ module.exports = app => {
   router.post('/test/:operate', controller.test.operate);
 
   // people
-  router.post('/people/:operate', controller.people.operate);
+  apiRouter.resources('people', '/people', controller.people);
 
   //
 

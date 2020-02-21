@@ -2,26 +2,27 @@
 const Service = require('egg').Service;
 
 class PeopleService extends Service {
-  async list(params = {}) {
+  async index(params = {}) {
     let {ctx} = this;
     return await ctx.model.People.find({}, {__v:0 });
   }
-  async get(id) {
+  async show(id) {
     let {ctx} = this;
     return await ctx.model.People.findById(id, {__v:0});
   }
-  async save(params = {}) {
+  async create(params) {
     let {ctx} = this;
-    let newInstance = new ctx.model.People(params);
-    return await newInstance.save();
+    let result = new ctx.model.People(params);
+    return await result.save();
   }
   async update(id, payload = {}) {
     let {ctx} = this;
     return await ctx.model.People.findByIdAndUpdate(id, payload, {
+      // true to return the modified document rather than the original. defaults to false
       new: true
     });
   }
-  async delete(id) {
+  async destroy(id) {
     let {ctx} = this;
     return await ctx.model.People.findByIdAndRemove(id, {
       useFindAndModify: false

@@ -1,35 +1,31 @@
 'use strict';
-const Controller = require('../core/base_controller');
+const Controller = require('egg').Controller;
 
 class PeopleController extends Controller {
-  async list() {
+  async index() {
     const {ctx, service} = this;
-    ctx.body = await service.people.list();
+    ctx.body = await service.people.index();
   }
 
-  async get() {
+  async show() {
     const {ctx, service} = this;
-    let docs = await service.people.get(ctx.request.body.id);
-    this.setBody(docs);
+    ctx.body = await service.people.show(ctx.params.id);
   }
 
-  async save() {
+  async create() {
     const {ctx, service} = this;
-    ctx.body = await service.people.save(ctx.request.body);
+    ctx.body = await service.people.create(ctx.request.body);
+    ctx.status = 201;
   }
 
   async update() {
     const {ctx, service} = this;
-    let  {id, ...payload} = ctx.request.body;
-    let docs = await service.people.update(id, payload);
-    this.setBody(docs);
+    ctx.body = await service.people.update(ctx.params.id, ctx.request.body);
   }
 
-  async delete() {
+  async destroy() {
     const {ctx, service} = this;
-    let {id} = ctx.request.body;
-    let docs = await service.people.delete(id);
-    this.setBody(docs);
+    ctx.body = await service.people.destroy(ctx.params.id);
   }
 }
 

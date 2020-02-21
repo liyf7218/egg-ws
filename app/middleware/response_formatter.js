@@ -1,11 +1,11 @@
 module.exports = (options, app) => {
-  return async function format_response(ctx, next){
+  return async function format_response(ctx, next) {
     await next();
-    let {body: data, message} = ctx;
+    let {body, message} = ctx;
     ctx.body = {
       code: 200,
       message: message || '操作成功!',
-      data
+      data: body || ""
     }
   }
 }

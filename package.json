@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:unit-studio/egg-ws.git"
   },
   "author": "liyf",
   "license": "MIT"

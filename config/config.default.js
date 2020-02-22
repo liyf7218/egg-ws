@@ -17,7 +17,7 @@ module.exports = appInfo => {
 
   // 增加配置中间件,这里是用来管是否要 动用 某个中间件的,只有写在 app/middleware 下的中间件才行
   // 这里要统一将中间件命名为驼峰形式
-  config.middleware = ['requestValidator', 'responseFormatter'];
+  config.middleware = ['responseFormatter', 'requestValidator'];
 
   // 格式化返回的数据
   // config.responseFormatter = {
@@ -61,6 +61,7 @@ module.exports = appInfo => {
 
       // 处理验证错误
       if (message == "Validation Failed") {
+        ctx.status = 422;
         responseBody.code = 422;
         responseBody.errors = errors;
       }

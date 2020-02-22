@@ -1,11 +1,13 @@
 module.exports = (options, app) => {
   return async function format_response(ctx, next) {
     await next();
-    let {body, message} = ctx;
+    if(!ctx.body){
+      console.log('===============> body empty');
+    }
     ctx.body = {
       code: 200,
-      message: message || '操作成功!',
-      data: body || ""
+      message: ctx.message || '操作成功!',
+      data: ctx.body || ""
     }
   }
 }

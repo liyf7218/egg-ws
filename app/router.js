@@ -5,7 +5,7 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  const apiRouter = app.router.namespace('/api/v1');
+  const apiV1Router = app.router.namespace('/api/v1');
 
   // home
   router.get('/', controller.home.index);
@@ -14,9 +14,8 @@ module.exports = app => {
   // test
   router.post('/test/:operate', controller.test.operate);
 
-  // people
-  apiRouter.resources('people', '/people', controller.people);
-
-  //
+  // 版本接口 /api/v1
+  apiV1Router.resources('people', '/people', controller.v1.people);
+  apiV1Router.resources('user', '/user', controller.v1.user);
 
 };

@@ -46,12 +46,26 @@ module.exports = appInfo => {
     }
   };
 
+  // 上传文件配置
+  config.multipart = {
+    fileSize: '50mb',
+    // will append to whilelist
+    fileExtensions: [
+      '.xls',
+      '.xlsx',
+    ],
+  };
+
   // 统一错误处理
   config.onerror = {
     all(err, ctx) {
       // 在此处定义针对所有响应类型的错误处理方法
       // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
-      let {code, message, errors} = err;
+      let {
+        code,
+        message,
+        errors
+      } = err;
       ctx.logger.error(err);
 
       let responseBody = {
@@ -68,7 +82,7 @@ module.exports = appInfo => {
 
       //必须先设置返回数据类型,否则只能默认赋值成字符串,改成别的不行
       ctx.set('Content-Type', 'application/json');
-      let headerAccept = ctx.accepts("application/json","json", "html", "text/plain");
+      let headerAccept = ctx.accepts("application/json", "json", "html", "text/plain");
       switch (headerAccept) {
         case "json":
         case "application/json":
@@ -83,6 +97,13 @@ module.exports = appInfo => {
       }
       ctx.status = 500;
     }
+  };
+
+  // Merge all parameters (ctx.params, ctx.request.query, ctx.request.body) into ctx.params
+  config.parameters = {
+    logParameters: true,
+    // param names that you want filter in log.
+    filterParameters: ['password'],
   };
 
   // 配置跨域
@@ -118,6 +139,7 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    baseDir: require('path').join(__dirname, '..')
   };
 
   return {

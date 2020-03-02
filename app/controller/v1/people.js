@@ -27,6 +27,26 @@ class PeopleController extends Controller {
     const {ctx, service} = this;
     ctx.body = await service.people.destroy(ctx.params.id);
   }
+
+  async upload() {
+    const {ctx, service} = this;
+
+    // 保存上传的文件
+    let fileList = await service.upload.index();
+
+    // 解析文件
+    let jsonSheet = await service.parseExcel.index(fileList);
+
+    ctx.body = await service.people.create(jsonSheet);
+    ctx.status = 201;
+  }
+
+  async destroyMany(){
+    const {ctx, service} = this;
+    let {ids = ''} = ctx.request.body;
+    ctx.body = await service.people.destroy(ids);
+  }
+
 }
 
 module.exports = PeopleController;

@@ -11,10 +11,12 @@ class PeopleService extends Service {
     return await ctx.model.People.findById(id, {__v:0});
   }
 
-  async create(params) {
+  async create(docs) {
     let {ctx} = this;
-    let result = new ctx.model.People(params);
-    return await result.save();
+    if(!(docs instanceof Array)){
+      docs = [docs]
+    }
+    return await ctx.model.People.insertMany(docs);
   }
 
   async update(id, payload = {}) {
@@ -25,11 +27,13 @@ class PeopleService extends Service {
     });
   }
 
-  async destroy(id) {
+  async destroy(ids) {
     let {ctx} = this;
-    return await ctx.model.People.findByIdAndRemove(id, {
-      useFindAndModify: false
-    });
+    if(!(ids instanceof Array)){
+      ids = ids.split(',');
+    }
+    console.log(ids);
+    return await ctx.model.People.deleteMany({ _id: { $in: ids } });
   }
 
 }

@@ -22,6 +22,11 @@ module.exports = {
     enable: true,
     package: 'egg-mongoose'
   },
+  parameters: {
+    // Merge all parameters (ctx.params, ctx.request.query, ctx.request.body) into ctx.params
+    enable: true,
+    package: 'egg-parameters',
+  },
   routerPlus: {
     // 配置路由
     enable: true,

@@ -3,6 +3,22 @@
 const Controller = require('egg').Controller;
 
 class TestController extends Controller {
+
+  // 获取动态路由
+  async operate() {
+    const {ctx} = this;
+    const {operate} = ctx.params;
+
+    if (operate && (operate in this)) {
+      console.log('==========> app/controller/test.js operate: ' + operate);
+      await this[operate]();
+      return;
+    }
+
+    // 不然就把 operate 直接打印出来
+    ctx.body = ctx.params;
+  }
+
   async index() {
     const {ctx} = this;
     ctx.body = 'test';
@@ -55,20 +71,18 @@ class TestController extends Controller {
     ctx.body = await service.test.findAll()
   }
 
-  // 获取动态路由
-  async operate() {
-    const {ctx} = this;
-    const {operate} = ctx.params;
+  async upload(){
+    const {ctx, service} = this;
 
-    if (operate && (operate in this)) {
-      console.log('==========> app/controller/test.js operate: ' + operate);
-      await this[operate]();
-      return;
-    }
+    // 保存上传的文件
+    let fileList = await service.upload.index();
+    // 解析文件
+    let jsonSheet = await service.parseExcel.index(fileList);
 
-    // 不然就把 operate 直接打印出来
-    ctx.body = ctx.params;
+    ctx.status = 200;
+    ctx.body = jsonSheet;
   }
+
 }
 
 module.exports = TestController;

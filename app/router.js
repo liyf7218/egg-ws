@@ -20,4 +20,19 @@ module.exports = app => {
   apiV1Router.post('/people/delete', controller.v1.people.destroyMany);
   apiV1Router.resources('user', '/user', controller.v1.user);
 
+  // 获取国家和地区的数据
+  apiV1Router.resources('area', '/area', controller.v1.area);
+  apiV1Router.post('/area/upload', controller.v1.area.upload);
+  apiV1Router.post('/area/delete', controller.v1.area.destroyMany);
+
+  // 获取省市县的数据
+  apiV1Router.resources('city', '/city', controller.v1.city);
+  apiV1Router.post('/city/upload', controller.v1.city.upload);
+  apiV1Router.post('/city/delete', controller.v1.city.destroyMany);
+
+  // 获取大学的数据
+  apiV1Router.resources('university', '/university', controller.v1.university);
+  apiV1Router.post('/university/upload', controller.v1.university.upload);
+  apiV1Router.post('/university/delete', controller.v1.university.destroyMany);
+
 };

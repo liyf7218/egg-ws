@@ -15,3 +15,4 @@ typings/
 .nyc_output/
 app/public/test
 app/public/uploads
+.vscode/

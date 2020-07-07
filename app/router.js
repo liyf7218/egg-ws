@@ -14,6 +14,9 @@ module.exports = app => {
   // test
   router.post('/test/:operate', controller.test.operate);
 
+  // 上传文件
+  apiV1Router.post('/upload', controller.v1.upload.index);
+
   // 版本接口 /api/v1
   apiV1Router.resources('people', '/people', controller.v1.people);
   apiV1Router.post('/people/upload', controller.v1.people.upload);

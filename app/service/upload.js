@@ -9,6 +9,7 @@ class UploadService extends Service {
     showLocalPath: true
   }) {
     let {ctx} = this;
+    console.log('ctx', ctx);
     // 使用 egg-multipart 上传文件
     const parts = ctx.multipart();
     let part;
@@ -28,7 +29,7 @@ class UploadService extends Service {
         file.name = part.filename;
         file.type = part.mimeType;
         // 保存地址
-        file.localPath = path.join(this.config.baseDir, `app/public/test/${part.filename}`);
+        file.localPath = path.join(this.config.baseDir, `app/public/uploads/${part.filename}`);
         // 创建写入流
         let writable = await fs.createWriteStream(file.localPath);
 
